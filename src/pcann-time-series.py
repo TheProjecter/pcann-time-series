@@ -381,7 +381,6 @@ def usage():
     print "-i|--num-input num         Set the number of input nodes"
     print "-d|--num-hidden num        Set the number of hidden nodes per layer"
     print "-o|--num-output num        Set the number of output nodes"
-    print "--initweight num           The initial weight of every connection"
     print "-f|--function sin|sinh|saw The time series function to use"
     print "-w|--freq num              The frequency of the wave"
     print "-a|--amp num               The amplitude of the wave"
@@ -395,13 +394,13 @@ def usage():
 
 def main(argv):
     """Train and test networks based on the given command line args."""
-
+    
     try:
         longs = ["help", "num-input=", "num-hlayers=", "num-hidden=",
                  "num-output=", "init-weight=",
                  "function=", "freq=", "amp=", "phase=", "period=",
                  "train0=", "trainf=", "test0=", "testf=", "threads="]
-        opts, args = getopt.getopt(argv, "hi:l:d:o:f:w:a:p:t:", longs)
+        opts, args = getopt.getopt(argv[1:], "hi:l:d:o:f:w:a:p:t:", longs)
     except getopt.GetoptError:
         usage()
         sys.exit(2)
@@ -418,8 +417,12 @@ def main(argv):
               #'test0': -10000.0, 'testf': 10000.0,
               'test0': -50.0, 'testf': 50.0,
               'threads': 10}
+    
     for o, a in opts:
-        if o in ('-i', '--num-input'):
+        if o in ('-h', '--help'):
+            usage()
+            sys.exit(0)
+        elif o in ('-i', '--num-input'):
             config['num-input'] = int(a)
         elif o in ('-d', '--num-hidden'):
             config['num-hidden'] = int(a)
@@ -458,7 +461,7 @@ def main(argv):
             config['testf'] = float(a)
         elif o in ('-t', '--threads'):
             config['threads'] = int(a)
-
+    
     training_patterns = gen_patterns(config['num-input'],
                                      config['num-output'],
                                      config['train0'],
