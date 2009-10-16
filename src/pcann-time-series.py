@@ -274,7 +274,6 @@ def train_test_networks(num_inputs, num_hidden, num_outputs,
 
     print 'wi,wh,num connections,train time(us),train mse,test time(us),test mse'
     weight_sets = gen_weight_sets(num_inputs, num_hidden, num_outputs)
-    print weight_sets[:10]
     i = 1
     num_items = len(weight_sets)
     for w in weight_sets:
@@ -412,10 +411,8 @@ def main(argv):
               'function': math.sin, 'freq': 1.0, 'amp': 1.0, 'phase': 0.0,
               'period': 2 * math.pi,
               
-              #'train0': -100.0, 'trainf': 100.0,
-              'train0': -10.0, 'trainf': 10.0,
-              #'test0': -10000.0, 'testf': 10000.0,
-              'test0': -50.0, 'testf': 50.0,
+              'train0': -100.0, 'trainf': 100.0,
+              'test0': -10000.0, 'testf': 10000.0,
               'threads': 10}
     
     for o, a in opts:
